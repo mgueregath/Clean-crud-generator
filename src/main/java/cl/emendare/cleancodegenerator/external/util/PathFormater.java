@@ -23,6 +23,18 @@ public class PathFormater {
         return domainPath;
     }
     
+     public String formatDomainFactoryPath(String path, String module) {
+        String domainPath = "";
+        domainPath += path;
+        domainPath += "\\factory\\";
+        
+        if(module != null && !module.isEmpty()) {
+            domainPath += module;
+            domainPath += "\\";
+        }
+        return domainPath;
+    }
+    
     public String formatDomainUseCaseInterfacePath(String path, String module) {
         String domainPath = "";
         domainPath += path;
@@ -43,6 +55,30 @@ public class PathFormater {
         if(module != null && !module.isEmpty()) {
             domainPath += module;
             domainPath += "\\";
+        }
+        return domainPath;
+    }
+    
+    public String formatExternalEntityPath(String path, String module) {
+        String domainPath = "";
+        domainPath += path;
+        domainPath += "\\entity";
+        
+        if(module != null && !module.isEmpty()) {
+            domainPath += "\\";
+            domainPath += module;
+        }
+        return domainPath;
+    }
+    
+    public String formatExternalRepositoryPath(String path, String module) {
+        String domainPath = "";
+        domainPath += path;
+        domainPath += "\\repository";
+        
+        if(module != null && !module.isEmpty()) {
+            domainPath += "\\";
+            domainPath += module;
         }
         return domainPath;
     }

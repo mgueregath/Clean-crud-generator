@@ -33,4 +33,37 @@ public class PackageFormater {
         
         return finalPackage;
     }
+    
+    public String formatDomainFactoryPackage(String parent, String module) {
+        String finalPackage = parent;
+        finalPackage += ".domain.factory";
+        if(module != null && !module.isEmpty()) {            
+            finalPackage += ".";
+            finalPackage += module;
+        }
+        
+        return finalPackage;
+    }
+    
+    public String formatExternalRepositoryPackage(String parent, String module) {
+        String finalPackage = parent;
+        finalPackage += ".external.repository";
+        if(module != null && !module.isEmpty()) {            
+            finalPackage += ".";
+            finalPackage += module;
+        }
+        
+        return finalPackage;
+    }
+    
+    public String formatExternalEntityPackage(String parent, String module) {
+        String finalPackage = parent;
+        finalPackage += ".external.entity";
+        if(module != null && !module.isEmpty()) {            
+            finalPackage += ".";
+            finalPackage += module;
+        }
+        
+        return finalPackage;
+    }
 }

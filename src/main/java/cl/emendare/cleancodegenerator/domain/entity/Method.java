@@ -17,6 +17,7 @@ public class Method {
     protected String returnType;
     protected List<Parameter> parameters;
     protected Class entity;
+    protected String actions;
 
     /**
      * @return the name
@@ -100,6 +101,20 @@ public class Method {
      */
     public Class getEntity() {
         return entity;
+    }
+
+    /**
+     * @return the actions
+     */
+    public String getActions() {
+        return actions;
+    }
+
+    /**
+     * @param actions the actions to set
+     */
+    public void setActions(String actions) {
+        this.actions = actions;
     }
     
 }

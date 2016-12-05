@@ -8,7 +8,6 @@ package cl.emendare.cleancodegenerator.usecase;
 import cl.emendare.cleancodegenerator.domain.adapter.CommandLineWriterAdapter;
 import cl.emendare.cleancodegenerator.domain.contract.GenerateAddContractInterface;
 import cl.emendare.cleancodegenerator.domain.contract.WriteInterfaceInterface;
-import cl.emendare.cleancodegenerator.domain.entity.Entity;
 import cl.emendare.cleancodegenerator.domain.entity.Interface;
 import cl.emendare.cleancodegenerator.domain.entity.Method;
 import cl.emendare.cleancodegenerator.domain.entity.Parameter;
@@ -70,8 +69,6 @@ public class GenerateAddContract implements GenerateAddContractInterface {
         
         Method addMethod = mf.create("add", "public", entity);
         addMethod.setReturnType(entity.getName()); 
-        
-        System.out.println(entity.getProperties().size());
         
         for (ClassProperty property: entity.getProperties()) {
             if (!property.getName().equalsIgnoreCase("id")) {
