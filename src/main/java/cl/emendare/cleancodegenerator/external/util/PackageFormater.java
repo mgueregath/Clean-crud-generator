@@ -66,4 +66,16 @@ public class PackageFormater {
         
         return finalPackage;
     }
+    
+    public String formatUseCasePackage(String parent, String module, String folder) {
+        String finalPackage = parent;
+        finalPackage += ".usecases.";
+        if(module != null && !module.isEmpty()) {
+            finalPackage += module;
+            finalPackage += ".";
+        }
+        finalPackage += folder.toLowerCase();
+        
+        return finalPackage;
+    }
 }

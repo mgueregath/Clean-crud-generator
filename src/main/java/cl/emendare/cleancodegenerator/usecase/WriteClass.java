@@ -8,6 +8,7 @@ package cl.emendare.cleancodegenerator.usecase;
 import cl.emendare.cleancodegenerator.domain.adapter.FileWriterAdapter;
 import cl.emendare.cleancodegenerator.domain.contract.WriteClassInterface;
 import cl.emendare.cleancodegenerator.domain.entity.Class;
+import cl.emendare.cleancodegenerator.domain.entity.ClassProperty;
 import cl.emendare.cleancodegenerator.domain.entity.Interface;
 import cl.emendare.cleancodegenerator.domain.entity.Method;
 import cl.emendare.cleancodegenerator.domain.entity.Parameter;
@@ -48,7 +49,18 @@ public class WriteClass implements WriteClassInterface {
         lines.add(formatHeader(c.getName(),c.getInheritance(), c.getInterfaces()));
         lines.add("");
         
+        for (ClassProperty property: c.getProperties()) {
+            lines.add("    " + property.getType() + " " + property.getName() + ";");
+        }
+        
         for (Method method: c.getMethods()) {
+            
+            if (!c.getInterfaces().isEmpty() && !method.getName().equalsIgnoreCase(c.getName())) {
+                lines.add("\n    @Override");
+            } else {
+                lines.add("");
+            }
+            
             lines.add(formatMethod(method, c.getName()));
             
             if (method.getReturnType() != null && method.getReturnType().equalsIgnoreCase("List") &&
@@ -64,7 +76,6 @@ public class WriteClass implements WriteClassInterface {
             }
         }
         
-        lines.add("");
         lines.add("}");        
         
         return fileWriter.writeToFile(lines, c.getName(), path);
@@ -134,7 +145,7 @@ public class WriteClass implements WriteClassInterface {
             methodLine += "\n\n        " + method.getActions();
         }
         
-        methodLine += "\n\n    }\n";
+        methodLine += "\n    }";
         
         return methodLine;
     }

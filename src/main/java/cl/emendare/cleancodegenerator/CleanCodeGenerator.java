@@ -26,6 +26,7 @@ import cl.emendare.cleancodegenerator.usecase.GenerateAddContract;
 import cl.emendare.cleancodegenerator.usecase.GenerateDeleteContract;
 import cl.emendare.cleancodegenerator.usecase.GenerateFactory;
 import cl.emendare.cleancodegenerator.usecase.GenerateGetContract;
+import cl.emendare.cleancodegenerator.usecase.GenerateGetUseCase;
 import cl.emendare.cleancodegenerator.usecase.GenerateJpaEntity;
 import cl.emendare.cleancodegenerator.usecase.GenerateRepositoryImpl;
 import cl.emendare.cleancodegenerator.usecase.GenerateRepositoryInterface;
@@ -56,13 +57,19 @@ public class CleanCodeGenerator {
     private static CommandLineWriterAdapter ciWriter = new NativeCommanLineWriter();
     
     public static void main (String[] args) {
-        String path, name, type;
+        String path, name, type, option = null;
         try {
-            if (args.length < 3) throw new Exception();
+            if (args.length < 3) {
+                throw new Exception();
+            }
             
             path = args[0];
             name = args[1];
             type = args[2];
+            
+            if (args.length > 3 && args[3] != null) {
+                option = args[3];
+            }
                         
             converter = new GsonJsonConverter(path + "\\" + JSON_CONFIGURATION);
             repository = new ConfigurationRepository(converter);
@@ -92,6 +99,15 @@ public class CleanCodeGenerator {
                 case "-factory":
                     generateFactory(configuration, name, entity);
                     break;
+                case "-usecase":
+                    if (option != null) {
+                        switch (option) {
+                            case "get":
+                                generateGetUseCase(configuration, name, entity);
+                                break;
+                        }
+                    }
+                    
             }
                        
         } catch (Exception e) {
@@ -239,6 +255,28 @@ public class CleanCodeGenerator {
         String factoryServicePackage = generateFactoryService.generate(
                 configuration.getPackage(),
                 configuration.getDomainPath(),
+                name,
+                configuration.getModule(),
+                configuration.getAuthor(),
+                entity
+        );
+    }
+    
+    public static void generateGetUseCase (
+            Configuration configuration,
+            String name,
+            Class entity
+    ) throws Exception {
+        
+        GenerateGetUseCase generateGetUseCaseService = new GenerateGetUseCase(
+                classFactory,
+                writeClass,
+                ciWriter
+        );
+            
+        String result = generateGetUseCaseService.generate(
+                configuration.getPackage(),
+                configuration.getUseCasePath(),
                 name,
                 configuration.getModule(),
                 configuration.getAuthor(),

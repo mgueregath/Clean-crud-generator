@@ -83,4 +83,19 @@ public class PathFormater {
         return domainPath;
     }
     
+    public String formatUseCasePath(String path, String module, String folder) {
+        String domainPath = "";
+        domainPath += path;
+        
+        if(module != null && !module.isEmpty()) {
+            domainPath += "\\";
+            domainPath += module;
+        }
+        
+        domainPath += "\\";
+        domainPath += folder.toLowerCase();
+        
+        return domainPath;
+    }
+    
 }

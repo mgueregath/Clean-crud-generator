@@ -6,7 +6,7 @@
 package cl.emendare.cleancodegenerator.usecase;
 
 import cl.emendare.cleancodegenerator.domain.adapter.CommandLineWriterAdapter;
-import cl.emendare.cleancodegenerator.domain.contract.GenerateRepositoryInterfaceInterface;
+import cl.emendare.cleancodegenerator.domain.contract.GenerateInterface;
 import cl.emendare.cleancodegenerator.domain.contract.WriteInterfaceInterface;
 import cl.emendare.cleancodegenerator.domain.entity.Class;
 import cl.emendare.cleancodegenerator.domain.entity.ClassProperty;
@@ -24,7 +24,7 @@ import cl.emendare.cleancodegenerator.external.util.PathFormater;
  *
  * @author Mirko Gueregat <mgueregath@emendare.cl>
  */
-public class GenerateRepositoryInterface implements GenerateRepositoryInterfaceInterface {
+public class GenerateRepositoryInterface implements GenerateInterface {
     private InterfaceFactory interfaceFactory;
     private WriteInterfaceInterface writeInterface;
     private CommandLineWriterAdapter ciWriter;
@@ -70,7 +70,7 @@ public class GenerateRepositoryInterface implements GenerateRepositoryInterfaceI
         getByIdMethod.setReturnType(entity.getName()); 
         
         for (ClassProperty property: entity.getProperties()) {
-            if (!property.getName().equalsIgnoreCase("id")) {
+            if (property.getName().equalsIgnoreCase("id")) {
                 Parameter param = pf.create(property.getName(), property.getType());
                 getByIdMethod.addParameter(param);
             }

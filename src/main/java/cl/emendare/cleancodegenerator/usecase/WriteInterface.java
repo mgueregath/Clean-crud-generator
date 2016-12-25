@@ -60,7 +60,7 @@ public class WriteInterface implements WriteInterfaceInterface {
     }
     
     private String formatMethod(Method method) {
-        String methodLine = "    ";
+        String methodLine = "    " +  method.getModifier() + " ";
         
         if (method.getReturnType().equalsIgnoreCase("List")) {
             methodLine += "List<";

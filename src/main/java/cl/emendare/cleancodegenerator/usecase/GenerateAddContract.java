@@ -6,7 +6,7 @@
 package cl.emendare.cleancodegenerator.usecase;
 
 import cl.emendare.cleancodegenerator.domain.adapter.CommandLineWriterAdapter;
-import cl.emendare.cleancodegenerator.domain.contract.GenerateAddContractInterface;
+import cl.emendare.cleancodegenerator.domain.contract.GenerateInterface;
 import cl.emendare.cleancodegenerator.domain.contract.WriteInterfaceInterface;
 import cl.emendare.cleancodegenerator.domain.entity.Interface;
 import cl.emendare.cleancodegenerator.domain.entity.Method;
@@ -24,7 +24,7 @@ import cl.emendare.cleancodegenerator.external.util.PathFormater;
  *
  * @author Mirko Gueregat <mgueregath@emendare.cl>
  */
-public class GenerateAddContract implements GenerateAddContractInterface {
+public class GenerateAddContract implements GenerateInterface {
     
     private InterfaceFactory interfaceFactory;
     private WriteInterfaceInterface writeInterface;

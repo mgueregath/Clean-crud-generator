@@ -11,7 +11,7 @@ import cl.emendare.cleancodegenerator.domain.entity.Class;
  *
  * @author Mirko Gueregat <mgueregath@emendare.cl>
  */
-public interface GenerateRepositoryInterfaceInterface {
+public interface GenerateInterface {
     String generate(
             String packg,
             String path,

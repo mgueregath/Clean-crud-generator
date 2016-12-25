@@ -6,7 +6,7 @@
 package cl.emendare.cleancodegenerator.usecase;
 
 import cl.emendare.cleancodegenerator.domain.adapter.CommandLineWriterAdapter;
-import cl.emendare.cleancodegenerator.domain.contract.GenerateRepositoryImplInterface;
+import cl.emendare.cleancodegenerator.domain.contract.GenerateInterface;
 import cl.emendare.cleancodegenerator.domain.contract.WriteClassInterface;
 import cl.emendare.cleancodegenerator.domain.entity.Class;
 import cl.emendare.cleancodegenerator.domain.entity.ClassProperty;
@@ -25,14 +25,13 @@ import cl.emendare.cleancodegenerator.external.util.PathFormater;
  *
  * @author Mirko Gueregat <mgueregath@emendare.cl>
  */
-public class GenerateRepositoryImpl implements GenerateRepositoryImplInterface {
+public class GenerateRepositoryImpl implements GenerateInterface {
     
     private ClassFactory cf;
     private WriteClassInterface writeClass;
     private CommandLineWriterAdapter ciWriter;
     private PackageFormater packageFormater;
     private PathFormater pathFormater;
-
     
     public GenerateRepositoryImpl(
             ClassFactory cf,
@@ -56,7 +55,7 @@ public class GenerateRepositoryImpl implements GenerateRepositoryImplInterface {
             String author,
             Class entity
     ) throws Exception {
-        ciWriter.sendLine("Generating code for " + name + "Repository.java");
+        ciWriter.sendLine("Generating code for " + name + "RepositoryImpl.java");
         
         String finalPackage = packageFormater.formatExternalRepositoryPackage(packg, module);
         
@@ -127,12 +126,14 @@ public class GenerateRepositoryImpl implements GenerateRepositoryImplInterface {
         persist.setReturnType("boolean");
         parameter = pf.create(entity.getName().toLowerCase(), entity.getName());
         persist.addParameter(parameter);
+        persist.setActions("throw new UnsupportedOperationException(\"Not supported yet.\");");
         c.addMethod(persist);
         
         Method delete = mf.create("delete", "public", entity);
         delete.setReturnType("boolean");
         parameter = pf.create(entity.getName().toLowerCase(), entity.getName());
         delete.addParameter(parameter);
+        delete.setActions("throw new UnsupportedOperationException(\"Not supported yet.\");");
         c.addMethod(delete);
         
         String pathToArchiveDirectory = 
@@ -142,7 +143,7 @@ public class GenerateRepositoryImpl implements GenerateRepositoryImplInterface {
             throw new Exception();
         }
         
-        ciWriter.sendLine("Code for " + name + "Repository.java generated");
+        ciWriter.sendLine("Code for " + name + "RepositoryImpl.java generated");
         
         return finalPackage + "." + c.getName();
     }

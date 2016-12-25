@@ -6,7 +6,7 @@
 package cl.emendare.cleancodegenerator.usecase;
 
 import cl.emendare.cleancodegenerator.domain.adapter.CommandLineWriterAdapter;
-import cl.emendare.cleancodegenerator.domain.contract.GenerateJpaEntityInterface;
+import cl.emendare.cleancodegenerator.domain.contract.GenerateInterface;
 import cl.emendare.cleancodegenerator.domain.contract.WriteClassInterface;
 import cl.emendare.cleancodegenerator.domain.entity.Class;
 import cl.emendare.cleancodegenerator.domain.factory.ClassFactory;
@@ -20,7 +20,7 @@ import cl.emendare.cleancodegenerator.external.util.PathFormater;
  *
  * @author Mirko Gueregat <mgueregath@emendare.cl>
  */
-public class GenerateJpaEntity implements GenerateJpaEntityInterface {
+public class GenerateJpaEntity implements GenerateInterface {
 
     private ClassFactory cf;
     private WriteClassInterface writeClass;
@@ -53,7 +53,7 @@ public class GenerateJpaEntity implements GenerateJpaEntityInterface {
     ) throws Exception {
         ciWriter.sendLine("Generating code for " + name + "Jpa.java");
         
-        String finalPackage = packageFormater.formatExternalRepositoryPackage(packg, module);
+        String finalPackage = packageFormater.formatExternalEntityPackage(packg, module);
         
         Class c = cf.create(
                 name + "Jpa",

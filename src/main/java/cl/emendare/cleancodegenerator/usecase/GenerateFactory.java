@@ -6,11 +6,10 @@
 package cl.emendare.cleancodegenerator.usecase;
 
 import cl.emendare.cleancodegenerator.domain.adapter.CommandLineWriterAdapter;
-import cl.emendare.cleancodegenerator.domain.contract.GenerateFactoryInterface;
+import cl.emendare.cleancodegenerator.domain.contract.GenerateInterface;
 import cl.emendare.cleancodegenerator.domain.contract.WriteClassInterface;
 import cl.emendare.cleancodegenerator.domain.entity.Class;
 import cl.emendare.cleancodegenerator.domain.entity.ClassProperty;
-import cl.emendare.cleancodegenerator.domain.entity.Interface;
 import cl.emendare.cleancodegenerator.domain.entity.Method;
 import cl.emendare.cleancodegenerator.domain.entity.Parameter;
 import cl.emendare.cleancodegenerator.domain.factory.ClassFactory;
@@ -25,7 +24,7 @@ import cl.emendare.cleancodegenerator.external.util.PathFormater;
  *
  * @author Mirko Gueregat <mgueregath@emendare.cl>
  */
-public class GenerateFactory implements GenerateFactoryInterface {
+public class GenerateFactory implements GenerateInterface {
 
     private ClassFactory cf;
     private WriteClassInterface writeClass;
@@ -64,33 +63,32 @@ public class GenerateFactory implements GenerateFactoryInterface {
                 name + "Factory",
                 finalPackage                        
         );
-                
+        
         ParameterFactory pf = new ParameterFactory();
         MethodFactory mf = new MethodFactory();
         ClassPropertyFactory cpf = new ClassPropertyFactory();
         InterfaceFactory inf = new InterfaceFactory();
              
         Method create = mf.create("create", "public", entity);
-        
+        create.setReturnType(entity.getName());
         String actions = entity.getName() + " ";
         actions += entity.getName().toLowerCase() + " = ";
         actions += "new ";
         actions += entity.getName() + "();";
         
         for (ClassProperty proper: entity.getProperties()) {
-            System.out.println(proper.getName());
-            if (!proper.getName().equalsIgnoreCase("List")) {
+            if (!proper.getName().equalsIgnoreCase("id")) {
                 Parameter parameter = pf.create(proper.getName(), proper.getType());
                 create.addParameter(parameter);
                 
                 actions += "\n        " + entity.getName().toLowerCase() 
-                        + ".set" + proper.getName()
+                        + ".set" + proper.getName().substring(0, 1).toUpperCase() + proper.getName().substring(1)
                         + "(" + proper.getName() 
                         + ");";
             }
         }
         
-        actions += "\n\n        return " + entity.getName().toLowerCase();
+        actions += "\n\n        return " + entity.getName().toLowerCase() + ";";
         
         create.setActions(actions);
         
@@ -99,9 +97,7 @@ public class GenerateFactory implements GenerateFactoryInterface {
         
         String pathToArchiveDirectory = 
                 pathFormater.formatDomainFactoryPath(path, module);         
-           
-        System.out.println(pathToArchiveDirectory);
-        
+                  
         if (!writeClass.write(c, pathToArchiveDirectory, author)) {
             throw new Exception();
         }
